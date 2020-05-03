@@ -2,17 +2,23 @@
   "bindings": [
     {
       "authLevel": "anonymous",
-      "type": "httpTrigger",
       "direction": "in",
       "name": "req",
+      "type": "httpTrigger",
       "methods": [
         "post"
       ]
     },
     {
-      "type": "http",
       "direction": "out",
-      "name": "res"
-    }
+      "name": "res",
+      "type": "http"
+    },
+    {
+      "direction": "out",
+      "name": "$return",
+      "type": "sendGrid",
+      "apiKey" : "AzureWebJobsSendGridApiKey"
+  }
   ]
 }
