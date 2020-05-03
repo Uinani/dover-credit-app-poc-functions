@@ -37,10 +37,10 @@ module.exports = async function (context, req) {
     var message = {
         personalizations: [
             {
-                to: [ { email: "jose.e.chavez@outlook.com" } ]
+                to: [ { email: "greenawaybb@gmail.com" } ]
             } 
         ],
-        from: { email: "no-reply@uinani.com" },
+        from: { email: "jose.e.chavez@gmail.com" },
         subject: "Dover Credit Application POC",
         content: [{
             type: 'text/html',
