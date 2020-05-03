@@ -40,7 +40,7 @@ module.exports = async function (context, req) {
                 to: [ { email: "jose.e.chavez@outlook.com" } ]
             } 
         ],
-        from: { email: "jose.e.chavez@gmail.com" },
+        from: { email: "no-reply@uinani.com" },
         subject: "Dover Credit Application POC",
         content: [{
             type: 'text/html',
