@@ -22,8 +22,8 @@ name: Azure Function CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
 
 env:
   AZURE_WEBAPP_NAME: 'dovercreditapppoc' # set this to your application's name
