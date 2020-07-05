@@ -1,59 +1,47 @@
-const fieldMappings = {
-  firstName: 'First Name',
-  lastName: 'Last Name',
-  addressLine1: 'Address Line 1',
-  addressLine2: 'Address Line 2',
-  city: 'City',
-  state: 'State',
-  zipCode: 'Zip Code',
-  employerName: 'Employer Name',
-  yearsEmployed: 'Years Employed',
-  yearlySalary: 'Yearly Salary',
-  email: 'E-Mail Address',
-  creditCheckAgreement: 'Agrees to Credit Check?',
-};
+import fs from 'fs';
+import Mustache from 'mustache';
 
 const createEmailBody = (userData) => {
-  var emailBody = '<p>A credit application has been submitted with the following information:</p><br/>';
+  var path = __dirname + '//email-template.html';
+  fs.readFile(path, 'utf8', function (err, template) {
+    if (err) {
+      context.log.error(err);
+      context.done(err);
+    }
 
-  emailBody += '<table>';
+    var rendered = Mustache.render(template, userData);
 
-  for (const property in userData) {
-    emailBody += `<tr><td>${fieldMappings[property]}</td><td>${userData[property]}</td></tr>`
-  }
-
-  emailBody += '</table>';
-
-  return emailBody;
+    return [rendered, userData.overrideEmail];
+  });
 };
 
-module.exports = async function (context, req) {
+export default async function (context, req) {
   context.log('JavaScript HTTP trigger function processed a request.');
 
-  var userData = req.body;
-
-  var emailBody = createEmailBody(userData);
-
-  var message = {
-    personalizations: [
-      {
-        to: [{ email: "greenawaybb@gmail.com" }]
-      }
-    ],
-    from: { email: "jose.e.chavez@gmail.com" },
-    subject: "Dover Credit Application POC",
-    content: [{
-      type: 'text/html',
-      value: emailBody,
-    }]
-  };
-
-  context.res = {
-    status: 200,
-    body: "Credit Application mailed successfully",
-  }
-
-  context.done(null, message);
-
-  return message;
+  return createEmailBody(req.body)
+    .then((emailBody, overrideEmail) => {
+      return {
+        personalizations: [
+          {
+            to: [{ email: overrideEmail ?? "greenawaybb@gmail.com" }]
+          }
+        ],
+        from: { email: "jose.e.chavez@gmail.com" },
+        subject: "Dover Credit Application POC",
+        content: [{
+          type: 'text/html',
+          value: emailBody,
+        }]
+      };
+    })
+    .then((message) => {
+      context.res = {
+        status: 200,
+        body: "Credit Application mailed successfully",
+      };
+      
+      return message;
+    })
+    .then((message) => context.done(null, message))
+    .then(message => { return message; });
 };
