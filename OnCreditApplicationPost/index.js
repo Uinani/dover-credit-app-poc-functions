@@ -20,10 +20,12 @@ module.exports = async function (context, req) {
 
   return createEmailBody(req.body)
     .then((emailBody, overrideEmail) => {
+      var email = overrideEmail ? overrideEmail : "greenawaybb@gmail.com";
+      
       return {
         personalizations: [
           {
-            to: [{ email: overrideEmail ?? "greenawaybb@gmail.com" }]
+            to: [{ email }]
           }
         ],
         from: { email: "jose.e.chavez@gmail.com" },
