@@ -1,5 +1,5 @@
-import fs from 'fs';
-import Mustache from 'mustache';
+const fs = require('fs');
+const Mustache = require('mustache');
 
 const createEmailBody = (userData) => {
   var path = __dirname + '//email-template.html';
