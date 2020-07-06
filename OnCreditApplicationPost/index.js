@@ -15,7 +15,7 @@ const createEmailBody = (userData) => {
   });
 };
 
-export default async function (context, req) {
+module.exports = async function (context, req) {
   context.log('JavaScript HTTP trigger function processed a request.');
 
   return createEmailBody(req.body)
