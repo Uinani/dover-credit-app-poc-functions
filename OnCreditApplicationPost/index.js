@@ -35,7 +35,7 @@ const createEmailBody = async (userData) => {
     pipeline
   );
 
-  const shareName = 'dover-credit-fs-public';
+  const shareName = process.env.AzureStorageFileShareName;
   const shareURL = ShareURL.fromServiceURL(serviceURL, shareName);
 
   const directoryName = 'emailTemplates';
